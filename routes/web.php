@@ -12,12 +12,22 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+		return view('welcome');
 });
 //Route::resource('rest','RestTestController');
 
+//группа маршрутов для блога
 Route::group(['namespace'=>'Blog','prefix'=>'blog'], function (){
-   Route::resource('posts','PostController')->names('blog.post');
+	 Route::resource('posts','PostController')->names('blog.post');
+});
+
+//группа маршрутов для админки
+Route::group(['namespace'=>'Blog\Admin','prefix'=>'admin/blog'], function(){
+	//список методов
+	$methods = ['index','edit','store','update','create'];
+	Route::resource('categories','CategoryController')
+		->only($methods)
+		->names('blog.admin.categories');
 });
 
 
