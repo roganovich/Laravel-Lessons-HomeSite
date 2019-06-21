@@ -14,10 +14,14 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('rest','RestTestController');
- 
+//Route::resource('rest','RestTestController');
+
 Route::group(['namespace'=>'Blog','prefix'=>'blog'], function (){
    Route::resource('posts','PostController')->names('blog.post');
 });
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
