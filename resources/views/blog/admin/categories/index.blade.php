@@ -14,6 +14,7 @@
 							<tr>
 								<th>#</th>
 								<th>Название</th>
+								<th>Slug</th>
 								<th>Родитель</th>
 								<th>Действие</th>
 							</tr>
@@ -23,6 +24,7 @@
 							<tr>
 								<td>{{ $item->id }}</td>
 								<td>{{ $item->title }}</td>
+								<td>{{ $item->slug }}</td>
 								<td  @if (in_array($item->parent_id,[0,1])) style="color:#ccc"  @endif style="">
 									{{ $item->getParent()->title }}
 								</td>

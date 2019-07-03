@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Blog\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\BlogCategory;
+use App\Http\Requests\BlogCategoryFormRequest;
 
 class CategoryController extends BaseController
 {
@@ -26,7 +27,8 @@ class CategoryController extends BaseController
 	 */
 	public function create()
 	{
-		//
+		$item = new BlogCategory();
+		return view('blog.admin.categories.edit',['item'=>$item]);
 	}
 
 	/**
@@ -35,9 +37,22 @@ class CategoryController extends BaseController
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(BlogCategoryFormRequest $request)
 	{
-		//
+		$data= $request->input();
+		$data['slug'] = (empty($data['slug']))?str_slug($data['title']):$data['slug'];
+
+		$item = new BlogCategory();
+
+		if($item->create($data)){
+			return redirect()
+				->route('blog.admin.categories.index')
+				->with(['success'=>'Успешно!']);
+		}else{
+			return back()
+		  		->withErrors(['msg'=>"Ошибка сохранения!"])
+		  		->withInput();
+		}
 	}
 
 	/**
@@ -70,7 +85,7 @@ class CategoryController extends BaseController
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, $id)
+	public function update(BlogCategoryFormRequest $request, $id)
 	{
   		$item = BlogCategory::find($id);
 		if(empty($item)){
@@ -78,9 +93,14 @@ class CategoryController extends BaseController
 		  		->withErrors(['msg'=>"Запись #{$id} не найдена!"])
 		  		->withInput();
 		}
-		$data= $request->input();
-		$result = $item->fill($data);
-		if($result->save()){
+		$data= $request->input(); //Не валидированные данные
+		//$validateData = $request->validate();//Валидированные данные
+
+		//dd($validateData);
+		$data['slug'] = (empty($data['slug']))?str_slug($data['title']):$data['slug'];
+		//$result = $item->fill($data);
+		//$result->save()
+		if($item->update($data)){
 			return redirect()
 				->route('blog.admin.categories.edit', $item->id)
 				->with(['success'=>'Успешно!']);
