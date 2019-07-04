@@ -31,8 +31,8 @@
 				<div class="form-group">
 						<label for="parent_id">Parent_id</label>
 						<select class="form-control" name="parent_id">
-							@foreach ($item->getCategoriesList() as $category)
-								<option value="{{ $category->id }}" @if ($category->id == $item->parent_id) selected @endif>{{ $category->title }}</option>
+							@foreach ($categoryList as $category)
+								<option value="{{ $category->id }}" @if ($category->id == $item->parent_id) selected @endif>{{ $category->id_title }}</option>
 							@endforeach
 						</select>
 				</div>

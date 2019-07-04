@@ -28,12 +28,4 @@ class BlogCategory extends Model
         return $this->_parent;
     }
 
-    public function getCategoriesList(){
-        if(!$this->_categoriesList){
-          $this->_categoriesList = BlogCategory::all();
-        }
-        return $this->_categoriesList;
-    }
-
-
 }

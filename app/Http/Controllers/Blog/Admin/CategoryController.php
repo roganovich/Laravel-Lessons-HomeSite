@@ -6,17 +6,33 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\BlogCategory;
 use App\Http\Requests\BlogCategoryFormRequest;
+use App\Repositories\BlogCategoryRepository;
 
+/**
+ * Class CategoryController
+ * @package App\Http\Controllers\Blog\Admin
+ */
 class CategoryController extends BaseController
 {
-	/**
+
+    /*
+     * @var BlogCategoryRepository
+    */
+    private $blogCategoryRepository;
+
+    public function __construct() {
+        parent::__construct();
+        $this->blogCategoryRepository = app(BlogCategoryRepository::class);
+    }
+
+    /**
 	 * Display a listing of the resource.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index()
 	{
-		$paginator = BlogCategory::paginate(10);
+		$paginator = $this->blogCategoryRepository->getAllWithPaginator(10);
 		return view('blog.admin.categories.index', ['paginator'=>$paginator]);
 	}
 
@@ -28,7 +44,8 @@ class CategoryController extends BaseController
 	public function create()
 	{
 		$item = new BlogCategory();
-		return view('blog.admin.categories.edit',['item'=>$item]);
+        $categoryList = $this->blogCategoryRepository->getCategoriesList();
+        return view('blog.admin.categories.edit',['item'=>$item, 'categoryList'=>$categoryList]);
 	}
 
 	/**
@@ -74,8 +91,12 @@ class CategoryController extends BaseController
 	 */
 	public function edit($id)
 	{
-		$item = BlogCategory::findOrFail($id);
-		return view('blog.admin.categories.edit',['item'=>$item]);
+		$item = $this->blogCategoryRepository->getForeEdit($id);
+		if(empty($item)){
+		    abort(404);
+        }
+		$categoryList = $this->blogCategoryRepository->getCategoriesList();
+		return view('blog.admin.categories.edit',['item'=>$item, 'categoryList'=>$categoryList]);
 	}
 
 	/**
