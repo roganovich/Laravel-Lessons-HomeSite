@@ -29,10 +29,7 @@ class BlogCategoryRepository extends CoreRepository  {
      * @return mixed
      */
     public function getCategoriesList(){
-        //return $this->startConditions()->All();
         $columns = implode(',',['id','title','CONCAT (id, ". " , title ) as id_title']);
-
-
         $result = $this->startConditions()
             ->selectRaw($columns)
             ->toBase()

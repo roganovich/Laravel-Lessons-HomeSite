@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Blog\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\BlogCategory;
 use App\Http\Requests\BlogCategoryFormRequest;
 use App\Repositories\BlogCategoryRepository;
+
 
 /**
  * Class CategoryController
@@ -57,7 +59,7 @@ class CategoryController extends BaseController
 	public function store(BlogCategoryFormRequest $request)
 	{
 		$data= $request->input();
-		$data['slug'] = (empty($data['slug']))?str_slug($data['title']):$data['slug'];
+		$data['slug'] = (empty($data['slug']))?Str::slug($data['title']):$data['slug'];
 
 		$item = new BlogCategory();
 
@@ -118,7 +120,7 @@ class CategoryController extends BaseController
 		//$validateData = $request->validate();//Валидированные данные
 
 		//dd($validateData);
-		$data['slug'] = (empty($data['slug']))?str_slug($data['title']):$data['slug'];
+		$data['slug'] = (empty($data['slug']))?Str::slug($data['title']):$data['slug'];
 		//$result = $item->fill($data);
 		//$result->save()
 		if($item->update($data)){

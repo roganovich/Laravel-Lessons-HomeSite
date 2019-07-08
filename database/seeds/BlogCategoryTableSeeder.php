@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class BlogCategoryTableSeeder extends Seeder
 {
@@ -16,7 +17,7 @@ class BlogCategoryTableSeeder extends Seeder
         $cname = 'Без категории';
         $categories[] = [
             'title' => $cname,
-            'slug' => str_slug($cname),
+            'slug' => Str::slug($cname),
             'parent_id' => 0,
         ];
         
@@ -25,7 +26,7 @@ class BlogCategoryTableSeeder extends Seeder
             $parent_id = ($i>4)?rand(1,4):1;
             $categories[] = [
                 'title' => $cname,
-                'slug' => str_slug($cname),
+                'slug' => Str::slug($cname),
                 'parent_id' => $parent_id,
             ];
         }
