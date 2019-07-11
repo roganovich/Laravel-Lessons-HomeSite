@@ -8,7 +8,7 @@
 				<div class="card-body">
 					@if($item->exists)
 						<form method="POST" action="{{ route('blog.admin.posts.update',$item->id) }}">
-							@method('PATCH')
+						@method('PATCH')
 					@else
 						<form method="POST" action="{{ route('blog.admin.posts.store') }}">
 					@endif
@@ -35,6 +35,15 @@
 						</div>
 					</form>
 				</div>
+
+				@if($item->exists)
+					<br>
+					<form method="POST" action="{{ route('blog.admin.posts.destroy',$item->id) }}">
+						@method('DELETE')
+						@csrf
+						<button type="submit" class="btn btn-danger"/>Удалить</button>
+					</form>
+				@endif
 			</div>
 
 		</div>

@@ -18,6 +18,16 @@
 			</div>
 		@endIf
 
+		@if($item->is_published)
+			<div class="alert alert-success" role="alert">
+				Опубликовано
+			</div>
+		@else
+			<div class="alert alert-secondary" role="alert">
+				Черновик
+			</div>
+		@endif
+
 		<div class="card">
 			<div class="card-body">
 				<div class="form-group">
@@ -37,16 +47,18 @@
 						</select>
 				</div>
 				<div class="form-group">
-					<label for="excerpt">Slug</label>
-					<input type="text" class="form-control" name="excerpt"  value="{{ old('excerpt', $item->excerpt)  }}"/>
-				</div>
-				<div class="form-group">
 						<label for="content_raw">Content Raw</label>
 						<textarea name="content_raw" class="form-control">{{ old('content_raw', $item->content_raw)  }}</textarea>
 				</div>
 				<div class="form-group">
 					<label for="content_html">Content Html</label>
 					<textarea name="content_html" class="form-control">{{ old('content_html', $item->content_html)  }}</textarea>
+				</div>
+				<div class="form-check">
+					<label for="is_published" class="form-check-label">
+					<input type="hidden" name="is_published" value="0">
+					<input type="checkbox" name="is_published" class="form-check-input" value="1" @if($item->is_published) checked @endif>
+					Опубликован?</label>
 				</div>
 			</div>
 

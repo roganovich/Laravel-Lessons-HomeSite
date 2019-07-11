@@ -58,12 +58,8 @@ class CategoryController extends BaseController
 	 */
 	public function store(BlogCategoryFormRequest $request)
 	{
-		$data= $request->input();
-		$data['slug'] = (empty($data['slug']))?Str::slug($data['title']):$data['slug'];
-
 		$item = new BlogCategory();
-
-		if($item->create($data)){
+		if($item->create($request->input())){
 			return redirect()
 				->route('blog.admin.categories.index')
 				->with(['success'=>'Успешно!']);

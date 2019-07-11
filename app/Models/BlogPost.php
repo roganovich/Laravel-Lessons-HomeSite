@@ -9,6 +9,15 @@ class BlogPost extends Model
 {
     use SoftDeletes;
 
+    protected $fillable  = [
+        'title',
+        'slug',
+        'category_id',
+        'content_raw',
+        'content_html',
+        'is_published'
+    ];
+
     public function category(){
         return $this->belongsTo(BlogCategory::class);
     }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Blog\Admin;
 
 use App\Http\Requests\BlogPostFormRequest;
-use App\Models\BlogCategory;
+use App\Models\BlogPost;
 use App\Repositories\BlogPostRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -35,7 +35,7 @@ class PostController extends BaseController
      */
     public function create()
     {
-        $item = new BlogCategory();
+        $item = new BlogPost();
         $categoryList = $this->blogPostRepository->getCategoriesList();
         return view('blog.admin.posts.edit',['item'=>$item, 'categoryList'=>$categoryList]);
     }
@@ -48,12 +48,8 @@ class PostController extends BaseController
      */
     public function store(BlogPostFormRequest $request)
     {
-        $data= $request->input();
-        $data['slug'] = (empty($data['slug']))?Str::slug($data['title']):$data['slug'];
-
-        $item = new BlogCategory();
-
-        if($item->create($data)){
+        $item = new BlogPost();
+        if($item->create($request->input())){
             return redirect()
                 ->route('blog.admin.posts.index')
                 ->with(['success'=>'Успешно!']);
@@ -100,20 +96,13 @@ class PostController extends BaseController
      */
     public function update(BlogPostFormRequest $request, $id)
     {
-        $item = BlogCategory::find($id);
+        $item = BlogPost::find($id);
         if(empty($item)){
             return back()
                 ->withErrors(['msg'=>"Запись #{$id} не найдена!"])
                 ->withInput();
         }
-        $data= $request->input(); //Не валидированные данные
-        //$validateData = $request->validate();//Валидированные данные
-
-        //dd($validateData);
-        $data['slug'] = (empty($data['slug']))?Str::slug($data['title']):$data['slug'];
-        //$result = $item->fill($data);
-        //$result->save()
-        if($item->update($data)){
+        if($item->update($request->input())){
             return redirect()
                 ->route('blog.admin.posts.edit', $item->id)
                 ->with(['success'=>'Успешно!']);
@@ -132,6 +121,15 @@ class PostController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        $item = BlogPost::find($id);
+        if($item->delete()){
+            return redirect()
+                ->route('blog.admin.posts.index')
+                ->with(['success'=>'Успешно!']);
+        }else{
+            return back()
+                ->withErrors(['msg'=>"Ошибка удаления!"])
+                ->withInput();
+        }
     }
 }

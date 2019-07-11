@@ -2,7 +2,7 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-body">
-					<button type="submit" class="btn btn-primary"/>Сохранить</button>
+				<button type="submit" class="btn btn-primary"/>Сохранить</button>
 			</div>
 		</div>
 	</div>
@@ -28,9 +28,9 @@
 								<label for="deleted_at">deleted_at</label>
 								<input type="text" name="deleted_at" disabled class="form-control" value="{{ $item->deleted_at }}"/>
 						</div>
-
 				</div>
 			</div>
+
 		</div>
 	</div>
 @endif

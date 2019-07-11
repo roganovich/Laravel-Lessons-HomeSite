@@ -4,6 +4,15 @@
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-md-12">
+			@if(session('success'))
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					{{ session()->get('success') }}
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			@endIf
+
 			<nav class="navbar">
 				<a class="btn btn-primary" href="{{ route('blog.admin.posts.create') }}">Добавить</a>
 			</nav>
