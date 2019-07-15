@@ -90,6 +90,7 @@ class CategoryController extends BaseController
 	public function edit($id)
 	{
 		$item = $this->blogCategoryRepository->getForeEdit($id);
+		//dd($item->title);
 		if(empty($item)){
 		    abort(404);
         }

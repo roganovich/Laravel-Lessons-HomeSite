@@ -22,10 +22,27 @@ class BlogCategory extends Model
 
     /**
      * Возвращает объект родительской категории
+     * @parram String $valueFromDB
      * @return BlogCategory
     */
     public function parentCategory(){
         return $this->belongsTo(BlogCategory::class,'parent_id','id');
+    }
+
+    /**
+     * Возвращает объект title
+     * @return String
+     */
+    public function getTitleAttribute($value){
+        return mb_strtoupper($value);
+    }
+
+    /**
+     * Возвращает объект title
+     * @parram String
+     */
+    public function setTitleAttribute($string){
+        $this->attributes['title'] = mb_strtoupper($string);
     }
 
 
