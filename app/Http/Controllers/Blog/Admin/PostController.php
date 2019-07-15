@@ -48,12 +48,13 @@ class PostController extends BaseController
      */
     public function store(BlogPostFormRequest $request)
     {
-        $item = new BlogPost();
-        if($item->create($request->input())){
+        $data = $request->input(); //validate request
+        $item = new BlogPost(); //new model object
+        if($item->create($data)){//check succes result
             return redirect()
                 ->route('blog.admin.posts.index')
                 ->with(['success'=>'Успешно!']);
-        }else{
+        }else{//error msg and redirect
             return back()
                 ->withErrors(['msg'=>"Ошибка сохранения!"])
                 ->withInput();

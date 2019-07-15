@@ -25,8 +25,12 @@
 								<td>{{ $item->id }}</td>
 								<td>{{ $item->title }}</td>
 								<td>{{ $item->slug }}</td>
-								<td  @if (in_array($item->parent_id,[0,1])) style="color:#ccc"  @endif style="">
-									{{ $item->getParent()->title }}
+								<td  @if (in_array($item->parent_id,[0,1])) style="color:#ccc"  @endif>
+									{{--{{ optional($item->parentCategory)->title  }}--}}
+									{{--{{
+										$item->parentCategory->title ?? ($item->parent_id === \App\Models\BlogCategory::ROOT ? 'Корень':'?')
+									}}--}}
+									{{$item->parentTitle}}
 								</td>
 								<td><a href="{{ route('blog.admin.categories.edit',$item->id) }}">Изменить</a></td>
 							</tr>

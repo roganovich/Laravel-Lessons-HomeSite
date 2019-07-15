@@ -16,12 +16,14 @@
 						<div class="container">
 
 							@if($errors->any())
+								@foreach($errors->all() as $errorTxt)
 								<div class="alert alert-danger alert-dismissible fade show" role="alert">
-								  	{{ $errors->first() }}
+								  	{{ $errorTxt }}
 								  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 								    	<span aria-hidden="true">&times;</span>
 						  			</button>
 								</div>
+								@endforeach
 							@endIf
 
 							<div class="row justify-content-center">

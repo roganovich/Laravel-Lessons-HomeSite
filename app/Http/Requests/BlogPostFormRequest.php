@@ -33,4 +33,20 @@ class BlogPostFormRequest extends FormRequest
             'excerpt' => 'string|max:120',
         ];
     }
+
+    public function messages() {
+        return [
+            'title.required' => 'Введите имя поста',
+            'title.min' => 'Имя поста не меньше :min символов'
+        ];
+    }
+
+
+    public function attributes() {
+        return [
+            'title'=>'Заголовок',
+            'category_id'=>'Категория',
+            'content_raw'=>'Контент',
+        ];
+    }
 }

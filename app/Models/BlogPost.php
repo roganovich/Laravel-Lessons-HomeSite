@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BlogPost extends Model
 {
+    const UNKNOWN_USER = 1;
+
     use SoftDeletes;
 
     protected $fillable  = [

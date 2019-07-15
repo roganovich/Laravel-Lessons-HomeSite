@@ -22,6 +22,8 @@ class BlogPostObserver
     {
         $this->setPublishedAt($blogPost);
         $this->setSlug($blogPost);
+        $this->setHtml($blogPost);
+        $this->setUser($blogPost);
     }
     /**
      * Handle the blog post "updated" event.
@@ -89,5 +91,18 @@ class BlogPostObserver
         }
     }
 
+    public function setHtml(BlogPost $blogPost) {
+        if ($blogPost->isDirty('content_raw')) {
+            //Доделать генерацию
+            $blogPost->content_html = $blogPost->content_raw;
+        }
+    }
+
+    public function setUser(BlogPost $blogPost){
+        if($blogPost->isDirty('user_id')){
+            //Доделать авторизацию
+            //$blogPost->user_id = auth()->id() ?? BlogPost::UNKNOWN_USER;
+        }
+    }
 
 }

@@ -11,6 +11,8 @@ class BlogCategory extends Model
 
     use SoftDeletes;
 
+    const ROOT = 0;
+
     protected $fillable  = [
         'title',
         'slug',
@@ -18,14 +20,29 @@ class BlogCategory extends Model
         'description',
     ];
 
-    private $_parent;
-    private $_categoriesList;
+    /**
+     * Возвращает объект родительской категории
+     * @return BlogCategory
+    */
+    public function parentCategory(){
+        return $this->belongsTo(BlogCategory::class,'parent_id','id');
+    }
 
-    public function getParent(){
-        if(!$this->_parent){
-          $this->_parent = BlogCategory::find(($this->parent_id)?$this->parent_id:1);
-        }
-        return $this->_parent;
+
+    /**
+     * Возвращает title родительской категории
+     * @return string
+    */
+    public function getParentTitleAttribute(){
+        return $this->parentCategory->title ?? ($this->isRoot() ? 'Корень':'?');
+    }
+
+    /**
+     * определяет корень категорий
+     * @return bool
+     */
+    public function isRoot(){
+        return ($this->parent_id === self::ROOT);
     }
 
 }
